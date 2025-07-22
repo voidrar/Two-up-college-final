@@ -6,40 +6,42 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Random rand = new Random();
         Scanner scnr = new Scanner(System.in);
-        // ////// Values /////////
+        //  Values /
         boolean coin = false;
         boolean coin2 = false;
         int winner = 0;
         int loser = 0;
-        int pounds = 0;
-        // ////////////////////
+        double pounds = 0;
+
+
         boolean rematch = true; //Causes Respins & Rematches
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         while (rematch) {
             System.out.println(winner + " Wins So Far | " + loser + " Losses So Far.. ");
             System.out.println(" Welcome To Todays Two-up Game \n the fairest game in the land");
             System.out.println("--------- Earnings -- " + pounds + "---------------------");
             System.out.println("If you would like to bet some pounds Please do so now");
-            pounds = scnr.nextInt();
+            while (!scnr.hasNextDouble()) {
+                System.out.println("We only Bet Pounds Here..");
+                scnr.next();
+            }
+            pounds = scnr.nextDouble();
+            if(pounds > 1000000)
+            {
+                System.out.println("We dont have that much on hand, Would u lower your bet a bit?");
+              pounds = 0;
+                continue;
+            }
+            else if(pounds < 0)
+            {
+                System.out.println("haha , you have to pay US to play..");
+                pounds = 0;
+                continue;
+            }
             coin = rand.nextBoolean();
             coin2 = rand.nextBoolean();
 
-// /////////////////////////////////////////////////////
+
+
         if (!coin)
             System.out.println("Coin 1 is Tails");
         else
@@ -50,13 +52,12 @@ public class Main {
         else
             System.out.println("Coin 2 is Heads");
 
-        // /////////////// - Win & Loss No Rematch
+        // - Win & Loss No Rematch
             if (coin && coin2){System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");winner++;}
             else if (!coin && !coin2) {System.out.println("Loss, "+ pounds + " Pounds is your Losses"); loser++; pounds = 0;}
 
-            // /////////////////////////////////////////////////////
 
-        // /////////////// - Rematch Due To 50/50 coins
+        // - Rematch Due To 50/50 coins
         while(coin && !coin2  || !coin && coin2) {
 
 
@@ -66,7 +67,7 @@ public class Main {
             coin = rand.nextBoolean();
             coin2 = rand.nextBoolean();
 
-            // /////////////////////////////////////////////////////
+
             if (!coin)
                 System.out.println("Coin 1 is Tails");
             else
@@ -77,30 +78,32 @@ public class Main {
             else
                 System.out.println("Coin 2 is Heads");
 
-            // /////////////////////////////////////////////////////
 
-            // /////////////// - Win & Loss With Rematch
+            // - Win & Loss With Rematch
             if (coin && coin2){System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");winner++;}
             else if (!coin && !coin2) {System.out.println("Loss, "+ pounds + " Pounds is your Losses"); loser++; pounds = 0;}
 
 
            }
 
-            System.out.println();
-            System.out.print("Do you want to play another round? (y/n): ");
-            String answer = scnr.next().toLowerCase();
+            String answer = "";
+            while (!answer.equals("y") && !answer.equals("n")) {
+                System.out.print("Play another round? (y/n): ");
+                answer = scnr.next().toLowerCase();
+            }
 
-            if (!answer.equals("y")) {
-
+            if (answer.equals("n")) {
                 System.out.println("Thanks for playing! Final score: " + winner + " Wins | " + loser + " Losses.");
-             System.out.println("Closing in 5 Seconds");
                 Thread.sleep(5000);
                 System.exit(0);
             }
+
         }
     }
 }
-//https://github.com/voidrar/Two-up-college-final/blob/main/Two-up.java
+//https://github.com/voidrar/Two-up-college-final
+
+
 //first version
 /*import java.util.Random;
 import java.util.Scanner;
