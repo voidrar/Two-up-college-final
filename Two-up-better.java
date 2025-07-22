@@ -25,45 +25,15 @@ public class Main {
                 scnr.next();
             }
             pounds = scnr.nextDouble();
-            if(pounds > 1000000)
-            {
+            if (pounds > 1000000) {
                 System.out.println("We dont have that much on hand, Would u lower your bet a bit?");
-              pounds = 0;
+                pounds = 0;
                 continue;
-            }
-            else if(pounds < 0)
-            {
+            } else if (pounds < 0) {
                 System.out.println("haha , you have to pay US to play..");
                 pounds = 0;
                 continue;
             }
-            coin = rand.nextBoolean();
-            coin2 = rand.nextBoolean();
-
-
-
-        if (!coin)
-            System.out.println("Coin 1 is Tails");
-        else
-            System.out.println("Coin 1 is Heads");
-
-        if (!coin2)
-            System.out.println("Coin 2 is Tails");
-        else
-            System.out.println("Coin 2 is Heads");
-
-        // - Win & Loss No Rematch
-            if (coin && coin2){System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");winner++;}
-            else if (!coin && !coin2) {System.out.println("Loss, "+ pounds + " Pounds is your Losses"); loser++; pounds = 0;}
-
-
-        // - Rematch Due To 50/50 coins
-        while(coin && !coin2  || !coin && coin2) {
-
-
-            System.out.println("respin");
-            Thread.sleep(2000);
-            System.out.println("\n");
             coin = rand.nextBoolean();
             coin2 = rand.nextBoolean();
 
@@ -78,13 +48,51 @@ public class Main {
             else
                 System.out.println("Coin 2 is Heads");
 
+            // - Win & Loss No Rematch
+            if (coin && coin2) {
+                System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");
+                winner++;
+            } else if (!coin && !coin2) {
+                System.out.println("Loss, " + pounds + " Pounds is your Losses");
+                loser++;
+                pounds = 0;
+            }
 
-            // - Win & Loss With Rematch
-            if (coin && coin2){System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");winner++;}
-            else if (!coin && !coin2) {System.out.println("Loss, "+ pounds + " Pounds is your Losses"); loser++; pounds = 0;}
+
+            // - Rematch Due To 50/50 coins
+            while ((coin && !coin2) || (!coin && coin2)) {
 
 
-           }
+                System.out.println("respin");
+                Thread.sleep(2000);
+                System.out.println("\n");
+                coin = rand.nextBoolean();
+                coin2 = rand.nextBoolean();
+
+
+                if (!coin)
+                    System.out.println("Coin 1 is Tails");
+                else
+                    System.out.println("Coin 1 is Heads");
+
+                if (!coin2)
+                    System.out.println("Coin 2 is Tails");
+                else
+                    System.out.println("Coin 2 is Heads");
+
+
+                // - Win & Loss With Rematch
+                if (coin && coin2) {
+                    System.out.println("Win, " + pounds * 3 + " Pounds is your Earnings");
+                    winner++;
+                } else if (!coin && !coin2) {
+                    System.out.println("Loss, " + pounds + " Pounds is your Losses");
+                    loser++;
+                    pounds = 0;
+                }
+
+
+            }
 
             String answer = "";
             while (!answer.equals("y") && !answer.equals("n")) {
@@ -101,116 +109,3 @@ public class Main {
         }
     }
 }
-//https://github.com/voidrar/Two-up-college-final
-
-
-//first version
-/*import java.util.Random;
-import java.util.Scanner;
-
-
-public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        Random rand = new Random();
-        Scanner scnr = new Scanner(System.in);
-
-        boolean coin = false;
-        boolean coin2 = false;
-
-
-        // win loss & Money
-        int winner = 0;
-        int loser = 0;
-        int pounds = 0;
-        // Easier calls
-        int w = winner;
-        int l = loser;
-        boolean rematch = true;
-        while (rematch) {
-
-
-            System.out.println("\n\n\n");
-                System.out.println(w + " Wins So Far | " + l + " Loses In a Row So Far.. ");
-                System.out.println(" Welcome To Todays Two-up Game \n the fairest game in the land");
-                System.out.println("------------------------------");
-                System.out.println("If you would like to bet some pounds Please do so now");
-            pounds = scnr.nextInt();
-
-            //coins///////////////////////////////////////
-                coin = rand.nextBoolean();
-                if (!coin) {
-                    System.out.println("Coin 1 : Tails");
-                } else if (coin) {
-                    System.out.println("Coin 1 : Heads");
-                }
-                coin2 = rand.nextBoolean();
-                if (!coin2) {
-                    System.out.println("Coin 2 : Tails");
-                } else if (coin2) {
-                    System.out.println("Coin 2 : Heads");
-                }
-// ////////////////////////////////////////////
-
-                // win loss conditions
-                if (coin == false && coin2 == false) {
-                    System.out.println("----");
-                    System.out.println("pay up.");
-                    l++;
-                    System.out.println(l);
-                    System.out.println("The spinner will start the next match in 5 seconds!");
-                    Thread.sleep(5000);
-                }
-// ////////////////////////////////////////////
-
-
-            //win
-                else if (coin == true && coin2 == true) {
-                    System.out.println("        WINNER!:");
-                    System.out.print(" after collecting your earnings u have AU$:");
-                    System.out.println(pounds * 3);
-                    System.out.println("The spinner will start the next match in 5 seconds!");
-                    l = 0;
-                    w++;
-                    Thread.sleep(5000);
-                }
-// ////////////////////////////////////////////
-
-            if (coin == false && coin2 == true || coin == true && coin2 == false) {
-                System.out.println("Respin");
-                Thread.sleep(3000);
-                coin = rand.nextBoolean();
-                if (!coin) {
-                    System.out.println("Coin 1 : Tails");
-                } else if (coin) {
-                    System.out.println("Coin 1 : Heads");
-                }
-                coin2 = rand.nextBoolean();
-                if (!coin2) {
-                    System.out.println("Coin 2 : Tails");
-                } else if (coin2) {
-                    System.out.println("Coin 2 : Heads");
-                }
-                if (coin == false && coin2 == false) {
-                    System.out.println("----");
-                    System.out.println("pay up.");
-                    l++;
-                    System.out.println(l);
-                    System.out.println("The spinner will start the next match in 5 seconds!");
-                    Thread.sleep(5000);
-                }
-                else if (coin == true && coin2 == true) {
-                    System.out.println("        WINNER!:");
-                    System.out.print(" after collecting your earnings u have AU$:");
-                    System.out.println(pounds * 3);
-                    System.out.println("The spinner will start the next match in 5 seconds!");
-                    l = 0;
-                    w++;
-                    Thread.sleep(5000);
-                }
-
-            }
-
-        }
-    }
-}
-*/
